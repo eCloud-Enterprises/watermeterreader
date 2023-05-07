@@ -40,13 +40,13 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:ui"))
                 add("implementation", project(":core:designsystem"))
-//                add("implementation", project(":core:data"))
+                add("implementation", project(":core:data"))
                 add("implementation", project(":core:common"))
-//
-//                add("testImplementation", kotlin("test"))
-//                add("testImplementation",project(":core:testing"))
-//                add("androidTestImplementation", kotlin("test"))
-//                add("androidTestImplementation",project(":core:testing"))
+
+                add("testImplementation", kotlin("test"))
+                add("testImplementation",project(":core:testing"))
+                add("androidTestImplementation", kotlin("test"))
+                add("androidTestImplementation",project(":core:testing"))
 
 
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
