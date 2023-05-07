@@ -1,0 +1,28 @@
+pluginManagement {
+    includeBuild("build-logic")
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "watermeterreader"
+include(":app")
+include(":core:designsystem")
+include(":core:ui")
+include(":core:common")
+//include(":core:data")
+//include(":core:database")
+//include(":core:datastore")
+//include(":core:datastore-test")
+include(":core:model")
+//include(":core:network")
+//include(":core:testing")
+include(":core:ui")
