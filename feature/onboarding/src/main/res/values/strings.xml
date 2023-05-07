@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome to Water Meter Reader</string>
+    <string name="network_setup">Let\'s set up your network configuration</string>
+    <string name="next_button">Next</string>
+</resources>

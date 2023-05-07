@@ -8,6 +8,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.kotlin
+import java.io.File
 
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -24,11 +25,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 //                }
                 libraryVariants.all {
                     val variant = this
-                    sourceSets {
-                        getByName(variant.name) {
-                            kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
-                        }
-                    }
+                    addJavaSourceFoldersToModel(File(buildDir, "generated/ksp/${variant.name}/kotlin"))
                 }
             }
 
