@@ -1,8 +1,6 @@
 package com.ecloud.apps.watermeterreader.feature.onboarding.welcome
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +30,7 @@ fun WelcomeRoute(navigator: OnboardNavigator) {
 }
 
 @Composable
-fun WelcomeScreen(onNextClick: () -> Unit, modifier: Modifier = Modifier) {
+internal fun WelcomeScreen(onNextClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface {
         Column(
             modifier = modifier

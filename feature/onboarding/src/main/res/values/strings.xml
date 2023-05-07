@@ -3,4 +3,7 @@
     <string name="welcome">Welcome to Water Meter Reader</string>
     <string name="network_setup">Let\'s set up your network configuration</string>
     <string name="next_button">Next</string>
+    <string name="network_settings">Network Settings</string>
+    <string name="submit_form">Save</string>
+    <string name="test_button">Test</string>
 </resources>
