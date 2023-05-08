@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":sync:work"))
 
+    implementation(project(":feature:onboarding"))
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)

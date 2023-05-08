@@ -40,9 +40,11 @@ import com.ecloud.apps.watermeterreader.core.ui.UrlStateSaver
 import com.ecloud.apps.watermeterreader.core.ui.UrlTextFieldUserInput
 import com.ecloud.apps.watermeterreader.feature.onboarding.OnboardNavigator
 import com.ecloud.apps.watermeterreader.feature.onboarding.R
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
-fun NetworkRoute(
+fun NetworkScreen(
     navigator: OnboardNavigator
 ) {
     val viewModel = hiltViewModel<NetworkScreenViewModel>()

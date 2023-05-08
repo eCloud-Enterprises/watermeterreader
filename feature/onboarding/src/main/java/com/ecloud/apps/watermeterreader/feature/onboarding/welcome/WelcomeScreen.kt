@@ -22,10 +22,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ecloud.apps.watermeterreader.core.designsystem.theme.WmrTheme
 import com.ecloud.apps.watermeterreader.feature.onboarding.OnboardNavigator
 import com.ecloud.apps.watermeterreader.feature.onboarding.R
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 
+@RootNavGraph(start = true)
 @Destination
 @Composable
-fun WelcomeRoute(navigator: OnboardNavigator) {
+fun WelcomeScreen(navigator: OnboardNavigator) {
     WelcomeScreen(onNextClick = navigator::navigateToNextScreen)
 }
 
