@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "com.ecloud.apps.watermeterreader.core.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+  reserved 2;
+  string user_id = 1;
+  string branch_code = 3;
+  string branch_name = 4;
+  string company_code = 5;
+  string project_code = 6;
+  bool onlineMode = 7;
+  string base_url = 8;
+
+  message  Url {
+    string url = 1;
+    string name = 2;
+  }
+
+  repeated Url default_urls = 9;
+  repeated Url custom_urls = 10;
+
+  bool should_refetch_list = 11;
+
+}

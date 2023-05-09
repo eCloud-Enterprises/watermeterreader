@@ -1,0 +1,12 @@
+[
+  {
+    "warehousecode": "0001",
+    "warehousename": "Warehouse 1"
+  },  {
+    "warehousecode": "0002",
+    "warehousename": "Warehouse 2"
+  },  {
+    "warehousecode": "0003",
+    "warehousename": "Warehouse 3"
+  }
+]

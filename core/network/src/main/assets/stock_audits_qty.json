@@ -1,0 +1,115 @@
+{
+  "stockaudits": [
+    {
+      "docno": "0001"
+    },
+    {
+      "docno": "0002"
+    },
+    {
+      "docno": "0003"
+    },{
+      "docno": "0004"
+    },
+    {
+      "docno": "0005"
+    },
+    {
+      "docno": "0006"
+    },{
+      "docno": "0007"
+    },
+    {
+      "docno": "0008"
+    },
+    {
+      "docno": "0009"
+    },{
+      "docno": "0010"
+    },
+    {
+      "docno": "0012"
+    },
+    {
+      "docno": "0013"
+    },{
+      "docno": "0014"
+    },
+    {
+      "docno": "0015"
+    }
+  ],
+  "items": [
+    {
+      "barcode": "AB1-C",
+      "itemcode": "0001",
+      "itemdesc": "heelo"
+    },
+    {
+      "barcode": "AB2-C",
+      "itemcode": "0002",
+      "itemdesc": "heeloo"
+    },
+    {
+      "barcode": "AB3-C",
+      "itemcode": "0003",
+      "itemdesc": "heello"
+    },{
+      "barcode": "AB4-C",
+      "itemcode": "0004",
+      "itemdesc": "heelo"
+    },
+    {
+      "barcode": "AB5-C",
+      "itemcode": "0005",
+      "itemdesc": "heeloo"
+    },
+    {
+      "barcode": "AB6-C",
+      "itemcode": "0006",
+      "itemdesc": "heello"
+    },{
+      "barcode": "AB7-C",
+      "itemcode": "0007",
+      "itemdesc": "heelo"
+    },
+    {
+      "barcode": "AB8-C",
+      "itemcode": "0008",
+      "itemdesc": "heeloo"
+    },
+    {
+      "barcode": "AB9-C",
+      "itemcode": "0009",
+      "itemdesc": "heello"
+    },{
+      "barcode": "AB10-C",
+      "itemcode": "0010",
+      "itemdesc": "heelo"
+    },
+    {
+      "barcode": "AB11-C",
+      "itemcode": "0011",
+      "itemdesc": "heeloo"
+    },
+    {
+      "barcode": "AB12-C",
+      "itemcode": "0012",
+      "itemdesc": "heello"
+    },{
+      "barcode": "AB13-C",
+      "itemcode": "0013",
+      "itemdesc": "heelo"
+    },
+    {
+      "barcode": "AB14-C",
+      "itemcode": "0014",
+      "itemdesc": "heeloo"
+    },
+    {
+      "barcode": "AB15-C",
+      "itemcode": "0015",
+      "itemdesc": "heello"
+    }
+  ]
+}
