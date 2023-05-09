@@ -7,4 +7,6 @@
     <string name="navigate_back">Navigate Back</string>
     <string name="edit_url">Edit URL</string>
     <string name="delete_url">Delete URL</string>
+    <string name="submit_form">Submit</string>
+    <string name="label_name">URL Name</string>
 </resources>

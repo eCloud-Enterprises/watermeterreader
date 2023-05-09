@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,8 +24,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ecloud.apps.watermeterreader.core.designsystem.components.EbtTopAppBar
 import com.ecloud.apps.watermeterreader.core.designsystem.icon.EbtIcons
 import com.ecloud.apps.watermeterreader.core.designsystem.theme.WmrTheme
-import com.ecloud.apps.watermeterreader.feature.auth.AuthNavigator
 import com.ecloud.apps.watermeterreader.feature.auth.R
+import com.ecloud.apps.watermeterreader.feature.auth.addediturl.AddEditUrlRouteNavArgs
+import com.ecloud.apps.watermeterreader.feature.auth.destinations.AddEditUrlScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -35,12 +36,24 @@ fun NetworkSettingsScreen(navigator: DestinationsNavigator) {
     val viewModel = hiltViewModel<NetworkSettingsViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    NetworkSettingsScreen(state = state, onEvent = viewModel::onEvent, onNavigationEvent = { event ->
-        when (event) {
-            NetworkSettingsNavigationEvent.OnNavigateBack -> navigator.navigateUp()
-            is NetworkSettingsNavigationEvent.OnNavigateToForm -> {}
-        }
-    })
+    NetworkSettingsScreen(
+        state = state,
+        onEvent = viewModel::onEvent,
+        onNavigationEvent = { event ->
+            when (event) {
+                NetworkSettingsNavigationEvent.OnNavigateBack -> navigator.navigateUp()
+                is NetworkSettingsNavigationEvent.OnNavigateToForm -> {
+                    navigator.navigate(
+                        AddEditUrlScreenDestination(
+                            AddEditUrlRouteNavArgs(
+                                event.name,
+                                event.selected
+                            )
+                        )
+                    )
+                }
+            }
+        })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
