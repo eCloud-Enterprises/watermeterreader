@@ -7,7 +7,7 @@ data class UserData(
     val companyCode: String,
     val projectCode: String,
     val selectedUrl: String,
-    val customUrl: Map<String, String>,
+    val customUrl: List<NetworkUrl>,
     val shouldUpdateAuditList: Boolean,
     val onlineMode: Boolean,
 )

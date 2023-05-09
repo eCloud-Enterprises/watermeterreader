@@ -2,6 +2,7 @@ package com.ecloud.apps.watermeterreader.core.datastore
 
 import android.util.Log
 import androidx.datastore.core.DataStore
+import com.ecloud.apps.watermeterreader.core.model.data.NetworkUrl
 import com.ecloud.apps.watermeterreader.core.model.data.UserData
 import com.google.protobuf.kotlin.DslList
 import com.google.protobuf.kotlin.DslProxy
@@ -21,7 +22,7 @@ class WmrPreferencesDataSource @Inject constructor(
             companyCode = it.companyCode,
             projectCode = it.projectCode,
             selectedUrl = it.baseUrl,
-            customUrl = it.customUrlsList.associate { url -> url.name to url.url },
+            customUrl = it.customUrlsList.map { url -> NetworkUrl(url.name, url.url) },
             shouldUpdateAuditList = it.shouldRefetchList,
             onlineMode = it.onlineMode
         )
