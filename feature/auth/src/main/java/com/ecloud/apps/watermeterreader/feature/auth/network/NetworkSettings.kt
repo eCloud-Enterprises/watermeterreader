@@ -24,15 +24,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ecloud.apps.watermeterreader.core.designsystem.components.EbtTopAppBar
 import com.ecloud.apps.watermeterreader.core.designsystem.icon.EbtIcons
 import com.ecloud.apps.watermeterreader.core.designsystem.theme.WmrTheme
+import com.ecloud.apps.watermeterreader.feature.auth.AuthNavigator
 import com.ecloud.apps.watermeterreader.feature.auth.R
 import com.ecloud.apps.watermeterreader.feature.auth.addediturl.AddEditUrlRouteNavArgs
-import com.ecloud.apps.watermeterreader.feature.auth.destinations.AddEditUrlScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun NetworkSettingsScreen(navigator: DestinationsNavigator) {
+fun NetworkSettingsScreen(navigator: AuthNavigator) {
     val viewModel = hiltViewModel<NetworkSettingsViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -43,12 +42,10 @@ fun NetworkSettingsScreen(navigator: DestinationsNavigator) {
             when (event) {
                 NetworkSettingsNavigationEvent.OnNavigateBack -> navigator.navigateUp()
                 is NetworkSettingsNavigationEvent.OnNavigateToForm -> {
-                    navigator.navigate(
-                        AddEditUrlScreenDestination(
-                            AddEditUrlRouteNavArgs(
-                                event.name,
-                                event.selected
-                            )
+                    navigator.navigateToAddEditForm(
+                        AddEditUrlRouteNavArgs(
+                            event.name,
+                            event.selected
                         )
                     )
                 }

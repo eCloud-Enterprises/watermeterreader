@@ -53,6 +53,7 @@ dependencies {
     implementation(project(":sync:work"))
 
     implementation(project(":feature:onboarding"))
+    implementation(project(":feature:auth"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)

@@ -6,27 +6,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ecloud.apps.watermeterreader.feature.onboarding.destinations.WelcomeScreenDestination
-import com.ecloud.apps.watermeterreader.navigation.CommonNavGraphNavigator
+import com.ecloud.apps.watermeterreader.navigation.CoreFeatureNavigator
 import com.ecloud.apps.watermeterreader.navigation.NavGraphs
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.dependency
-import com.ramcosta.composedestinations.scope.DestinationScope
+import com.ramcosta.composedestinations.spec.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App() {
+fun App(startRoute: Route) {
     val appState = rememberAppState()
     Scaffold(snackbarHost = { SnackbarHost(hostState = appState.snackbarHostState) }) { padding ->
         DestinationsNavHost(
             navGraph = NavGraphs.root,
-            startRoute = NavGraphs.onboarding,
+            startRoute = startRoute,
             modifier = Modifier.padding(padding),
             engine = appState.engine,
             navController = appState.navController,
             dependenciesContainerBuilder = {
                 dependency(appState.snackbarHostState)
-                dependency(CommonNavGraphNavigator(destination, navController))
+                dependency(CoreFeatureNavigator(destination, navController))
             }
         )
 

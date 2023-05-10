@@ -1,4 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+// TODO: Remove once https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.jvm) apply false
@@ -7,6 +9,4 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.gms) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
-    id("com.android.library") version "8.0.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
 }

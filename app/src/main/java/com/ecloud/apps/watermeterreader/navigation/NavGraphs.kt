@@ -1,5 +1,6 @@
 package com.ecloud.apps.watermeterreader.navigation
 
+import com.ecloud.apps.watermeterreader.feature.auth.destinations.LoginScreenDestination
 import com.ecloud.apps.watermeterreader.feature.onboarding.destinations.NetworkScreenDestination
 import com.ecloud.apps.watermeterreader.feature.onboarding.destinations.WelcomeScreenDestination
 import com.ramcosta.composedestinations.spec.DestinationSpec
@@ -20,6 +21,19 @@ object NavGraphs {
             get() = WelcomeScreenDestination
     }
 
+    val auth = object : NavGraphSpec {
+        override val destinationsByRoute: Map<String, DestinationSpec<*>>
+            get() = listOf(
+                LoginScreenDestination,
+                NetworkScreenDestination
+            ).associateBy { it.route }
+        override val route: String
+            get() = "auth"
+        override val startRoute: Route
+            get() = LoginScreenDestination
+    }
+
+
     val root = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = emptyMap()
@@ -29,7 +43,8 @@ object NavGraphs {
             get() = onboarding
         override val nestedNavGraphs: List<NavGraphSpec>
             get() = listOf(
-                onboarding
+                onboarding,
+                auth
             )
 
     }
