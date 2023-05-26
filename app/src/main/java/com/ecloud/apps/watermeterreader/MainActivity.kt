@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 NavGraphs.root
                             }
-                            UiState.Success(route)
+                            UiState.Success(NavGraphs.reader)
                         }
                     }
                 }

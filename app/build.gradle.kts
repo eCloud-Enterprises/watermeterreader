@@ -54,6 +54,10 @@ dependencies {
 
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:reader"))
+    implementation(project(":feature:upload"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:projects"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)

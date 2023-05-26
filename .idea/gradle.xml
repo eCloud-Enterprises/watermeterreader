@@ -41,6 +41,10 @@
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/onboarding" />
+            <option value="$PROJECT_DIR$/feature/projects" />
+            <option value="$PROJECT_DIR$/feature/reader" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/upload" />
             <option value="$PROJECT_DIR$/sync" />
             <option value="$PROJECT_DIR$/sync/work" />
           </set>

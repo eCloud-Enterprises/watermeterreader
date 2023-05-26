@@ -1,7 +1,7 @@
 [versions]
 accompanist = "0.28.0"
 androidDesugarJdkLibs = "1.2.0"
-androidGradlePlugin = "8.0.1"
+androidGradlePlugin = "8.0.2"
 androidxActivityCompose = "1.6.1"
 androidxComposeBom = "2023.05.00"
 androidxComposeCompiler = "1.4.7"
@@ -26,6 +26,8 @@ androidxWindow = "1.0.0"
 androidxWork = "2.7.1"
 coil = "2.1.0"
 composeDestinations = "1.9.42-beta"
+codeScanner = '16.0.0'
+gridpad = "1.1.0"
 gmsPlugin = "4.3.14"
 firebaseBom = "31.1.1"
 firebaseCrashlyticsGradle = "2.9.2"
@@ -88,10 +90,12 @@ androidx-work = { module = "androidx.work:work-runtime-ktx", version.ref = "andr
 compose-destinations-animation = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "composeDestinations" }
 compose-destinations-core = "io.github.raamcosta.compose-destinations:core:1.7.16-beta"
 compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
+code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "codeScanner" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+gridpad = { group = "com.touchlane", name = "gridpad", version.ref = "gridpad" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-compose-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-ext-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltExt" }
@@ -119,7 +123,7 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-firebase-crashlytics-gradle= {group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref ="firebaseCrashlyticsGradle"}
+firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 
 
 [plugins]
