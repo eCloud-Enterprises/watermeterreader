@@ -1,0 +1,26 @@
+[
+  {
+    "meterno": "323456",
+    "prevreading": 12,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00
+  },
+  {
+    "meterno": "323457",
+    "prevreading": 11,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00
+  },
+  {
+    "meterno": "323457",
+    "prevreading": 8,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00
+  }
+]

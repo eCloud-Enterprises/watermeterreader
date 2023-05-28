@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WarehouseDto(
-    @SerialName("warehousecode")
-    val warehousecode: String,
-    @SerialName("warehousename")
-    val warehousename: String
+data class NetworkProject(
+    @SerialName("projectcode")
+    val projectcode: String,
+    @SerialName("projectname")
+    val projectname: String
 )

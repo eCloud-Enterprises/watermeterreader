@@ -6,9 +6,11 @@ import com.ecloud.apps.watermeterreader.core.network.WmrNetworkDataSource
 import com.ecloud.apps.watermeterreader.core.network.WmrDispatcher
 import com.ecloud.apps.watermeterreader.core.network.dto.LoginDto
 import com.ecloud.apps.watermeterreader.core.network.dto.NetworkBranch
-import com.ecloud.apps.watermeterreader.core.network.dto.WarehouseDto
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkConsumption
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkProject
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -24,18 +26,20 @@ class FakeWmrNetworkDataSource @Inject constructor(
 ) : WmrNetworkDataSource {
 
     companion object {
-        private const val WAREHOUSES_ASSET = "warehouses.json"
-        private const val STOCK_AUDITS_ASSET = "stock_audits.json"
-        private const val STOCK_AUDITS_WITH_ITEM_ASSET = "stock_audits_qty.json"
+        private const val WAREHOUSES_ASSET = "projects.json"
         private const val LOGIN_ASSET = "login.json"
-        private const val RESPONSE_ASSET = "response.json"
         private const val BRANCHES_ASSET = "branches.json"
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    override suspend fun getProjects(objectCode: String, type: String): List<WarehouseDto> =
+    override suspend fun getProjects(objectCode: String, type: String): List<NetworkProject> =
         withContext(ioDispatcher) {
             assets.open(WAREHOUSES_ASSET).use(networkJson::decodeFromStream)
+        }
+
+    override suspend fun getConsumptions(projectCode: String): List<NetworkConsumption> =
+        withContext(ioDispatcher){
+            assets.open("consumption-$projectCode.json").use(networkJson::decodeFromStream)
         }
 
     override suspend fun login(userid: String, password: String): LoginDto =

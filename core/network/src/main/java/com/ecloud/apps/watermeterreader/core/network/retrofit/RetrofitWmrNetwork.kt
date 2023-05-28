@@ -3,11 +3,13 @@ package com.ecloud.apps.watermeterreader.core.network.retrofit
 import com.ecloud.apps.watermeterreader.core.datastore.WmrPreferencesDataSource
 import com.ecloud.apps.watermeterreader.core.network.WmrNetworkDataSource
 import com.ecloud.apps.watermeterreader.core.network.dto.GetBranchesResponse
+import com.ecloud.apps.watermeterreader.core.network.dto.GetConsumptionsResponse
 import com.ecloud.apps.watermeterreader.core.network.dto.GetProjectsResponse
 import com.ecloud.apps.watermeterreader.core.network.dto.LoginDto
 import com.ecloud.apps.watermeterreader.core.network.dto.LoginResponseDto
 import com.ecloud.apps.watermeterreader.core.network.dto.NetworkBranch
-import com.ecloud.apps.watermeterreader.core.network.dto.WarehouseDto
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkConsumption
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkProject
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,6 +45,13 @@ private interface RetrofitEbtNetworkApi {
         @Query("objectcode") objectCode: String = "u_ajaxMobileGetStockAudit",
         @Query("type") type: String = "Warehouses"
     ): GetProjectsResponse
+
+    @GET("udp.php")
+    suspend fun getConsumptions(
+        @Query("id") id: String,
+        @Query("objectcode") objectCode: String = "u_ajaxMobileGetStockAudit",
+        @Query("type") type: String = "Warehouses",
+    ): GetConsumptionsResponse
 
     @Headers("No-Authentication: true")
     @HEAD("udp.php")
@@ -150,8 +159,11 @@ class RetrofitWmrNetwork @Inject constructor(
         .build()
         .create(RetrofitEbtNetworkApi::class.java)
 
-    override suspend fun getProjects(objectCode: String, type: String): List<WarehouseDto> =
+    override suspend fun getProjects(objectCode: String, type: String): List<NetworkProject> =
         networkApi.getProjects().warehouses
+
+    override suspend fun getConsumptions(projectCode: String): List<NetworkConsumption> =
+        networkApi.getConsumptions(projectCode).consumptions
 
     override suspend fun login(userid: String, password: String): LoginDto =
         networkApi.login(userid, password).login.first()
