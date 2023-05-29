@@ -10,13 +10,8 @@ android {
 
 dependencies {
 
-    implementation(libs.accompanist.permissions)
+    implementation(libs.play.services.code.scanner)
+    implementation(libs.play.services.base)
+    implementation(libs.play.services.tflite.java)
 
-    implementation(libs.mlkit.barcodeScanning)
-
-    implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.extensions)
 }

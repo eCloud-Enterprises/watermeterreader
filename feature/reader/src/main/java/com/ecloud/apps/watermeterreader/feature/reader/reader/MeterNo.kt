@@ -1,4 +1,4 @@
-package com.ecloud.apps.watermeterreader.feature.reader
+package com.ecloud.apps.watermeterreader.feature.reader.reader
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActionScope
@@ -13,21 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import com.ecloud.apps.watermeterreader.core.ui.TextFieldState
+import com.ecloud.apps.watermeterreader.feature.reader.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun Adjustments(
+internal fun MeterNo(
     modifier: Modifier = Modifier,
     state: TextFieldState = remember { TextFieldState() },
-    imeAction: ImeAction = ImeAction.Next,
+    imeAction: ImeAction = ImeAction.Done,
     onImeAction: KeyboardActionScope.() -> Unit = {}
 ) {
     OutlinedTextField(
         value = state.text,
         onValueChange = { state.text = it },
-        label = { Text(text = stringResource(R.string.text_adjustments)) },
+        label = { Text(text = stringResource(R.string.text_meter_no)) },
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
@@ -38,8 +38,7 @@ internal fun Adjustments(
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = imeAction,
-            autoCorrect = false,
-            keyboardType = KeyboardType.Number
+            autoCorrect = false
         )
     )
 }

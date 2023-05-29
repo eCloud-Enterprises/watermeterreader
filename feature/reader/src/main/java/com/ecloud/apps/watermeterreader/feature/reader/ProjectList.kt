@@ -17,36 +17,41 @@ import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun DraftList(
-    auditList: List<String>,
+internal fun ProjectList(
+    list: List<String>,
     selectedOptionText: String,
-    onChangeSelectedOptionText: (String) -> Unit,
+    onChangeSelectedOptionText: (String, Int) -> Unit,
+    onSelectedOptionTextChange: (String) -> Unit = {},
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
         OutlinedTextField(
             value = selectedOptionText,
-            onValueChange = {},
+            onValueChange = onSelectedOptionTextChange,
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth(),
-            label = { Text(stringResource(R.string.draft_list)) },
+            label = { Text(stringResource(R.string.project_list)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-            readOnly = true
         )
-        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            auditList.forEach { selectOption ->
-                DropdownMenuItem(
-                    text = { Text(text = selectOption) },
-                    onClick = {
-                        onChangeSelectedOptionText(selectOption)
-                        expanded = false
-                    },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                )
+        val filteringOptions = list.filter { it.contains(selectedOptionText, ignoreCase = true) }
+        if (filteringOptions.isNotEmpty()) {
+            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                list.forEachIndexed { index, selectOption ->
+                    DropdownMenuItem(
+                        text = { Text(text = selectOption) },
+                        onClick = {
+                            onChangeSelectedOptionText(selectOption, index)
+                            expanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                        enabled = index != 0
+                    )
+                }
             }
         }
+
     }
 }

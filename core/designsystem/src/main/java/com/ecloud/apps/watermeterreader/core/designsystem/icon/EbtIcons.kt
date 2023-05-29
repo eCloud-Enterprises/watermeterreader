@@ -47,6 +47,7 @@ object EbtIcons {
     val VerticalMenu = Icons.Default.MoreVert
     val Edit = Icons.Default.Edit
     val Close = Icons.Default.Close
+    val FilledClose = Icons.Filled.Close
     val Search = Icons.Default.Search
     val Filter = R.drawable.ic_filter_list
     val NetworkWifi = R.drawable.ic_network_wifi
