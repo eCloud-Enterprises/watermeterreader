@@ -1,7 +1,6 @@
 package com.ecloud.apps.watermeterreader.core.model.data
 
 data class ProjectWithConsumptions(
-    val code: String,
-    val name: String,
+    val project: Project,
     val consumptions: List<Consumption>
 )

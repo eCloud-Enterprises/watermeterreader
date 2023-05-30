@@ -7,5 +7,8 @@ data class Consumption(
     val adjustments: Float,
     val remarks: String,
     val consumption: Float,
-    val projectCode: String
+    val projectCode: String,
+    val location: String,
 )
+
+fun Consumption.getDisplayName(): String = "$meterNo - $location"

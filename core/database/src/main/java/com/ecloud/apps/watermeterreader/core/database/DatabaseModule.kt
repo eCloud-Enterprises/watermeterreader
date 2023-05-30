@@ -21,5 +21,6 @@ object DatabaseModule {
         WmrDatabase::class.java,
         "wmr-database"
     )
+        .fallbackToDestructiveMigration()
         .build()
 }

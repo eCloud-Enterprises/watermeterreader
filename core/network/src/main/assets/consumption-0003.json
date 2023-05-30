@@ -5,7 +5,8 @@
     "currentreading":  0.00,
     "adjustments": 0.00,
     "remarks": "",
-    "consumption": 0.00
+    "consumption": 0.00,
+    "location": "Makati-BL13-L15"
   },
   {
     "meterno": "323457",
@@ -13,7 +14,8 @@
     "currentreading":  0.00,
     "adjustments": 0.00,
     "remarks": "",
-    "consumption": 0.00
+    "consumption": 0.00,
+    "location": "Quezon-BL13-L15"
   },
   {
     "meterno": "323457",
@@ -21,6 +23,7 @@
     "currentreading":  0.00,
     "adjustments": 0.00,
     "remarks": "",
-    "consumption": 0.00
+    "consumption": 0.00,
+    "location": "Makati-BL14-L15"
   }
 ]

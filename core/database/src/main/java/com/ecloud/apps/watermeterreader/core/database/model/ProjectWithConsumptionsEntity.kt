@@ -15,8 +15,8 @@ data class ProjectWithConsumptionsEntity(
 )
 
 fun ProjectWithConsumptionsEntity.asExternalModel() = ProjectWithConsumptions(
-    name = project.name, code = project.code,
-    consumptions = consumptions.map { it.asExternalModel() }
+    project = project.asExternalModel(), consumptions = consumptions.map { it.asExternalModel() }
 )
 
-fun List<ProjectWithConsumptionsEntity>.asExternalModels() = map(ProjectWithConsumptionsEntity::asExternalModel)
+fun List<ProjectWithConsumptionsEntity>.asExternalModels() =
+    map(ProjectWithConsumptionsEntity::asExternalModel)

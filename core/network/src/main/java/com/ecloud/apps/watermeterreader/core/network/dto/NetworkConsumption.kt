@@ -17,4 +17,6 @@ data class NetworkConsumption(
    val remarks: String,
    @SerialName("consumption")
    val consumption: Float,
+   @SerialName("location")
+   val location: String,
 )

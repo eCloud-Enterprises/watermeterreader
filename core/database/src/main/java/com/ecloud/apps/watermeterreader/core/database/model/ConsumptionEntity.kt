@@ -31,6 +31,8 @@ data class ConsumptionEntity(
     val remarks: String,
     @ColumnInfo(name = "consumption")
     val consumption: Float,
+    @ColumnInfo(name = "location")
+    val location: String,
     @ColumnInfo(index = true)
     val projectCode: String
 
@@ -38,10 +40,11 @@ data class ConsumptionEntity(
 
 fun ConsumptionEntity.asExternalModel() = Consumption(
     meterNo = meterNo,
-    currentReading =  currentReading,
     previousReading = previousReading,
-    remarks = remarks,
-    projectCode = projectCode,
+    currentReading =  currentReading,
     adjustments = adjustments,
-    consumption = consumption
+    remarks = remarks,
+    consumption = consumption,
+    projectCode = projectCode,
+    location = location,
 )

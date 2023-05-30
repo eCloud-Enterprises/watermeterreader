@@ -27,19 +27,7 @@ class OfflineFirstConsumptionRepository @Inject constructor(
     }
 
     override fun updateConsumption(consumption: Consumption) {
-        consumption.run {
-            projectDao.updateConsumption(
-                ConsumptionEntity(
-                    meterNo,
-                    currentReading,
-                    previousReading = previousReading,
-                    remarks = remarks,
-                    adjustments = adjustments,
-                    projectCode = projectCode,
-                    consumption = this.consumption
-                )
-            )
-        }
+        projectDao.updateConsumption(consumption.asEntity())
     }
 
     override suspend fun fetchConsumptions(projectCodes: List<String>) {
@@ -47,10 +35,8 @@ class OfflineFirstConsumptionRepository @Inject constructor(
             network.getConsumptions(code).map { c -> c.asEntity(code) }
         }.flatten()
 
-        Log.d("ConsumptionRepo", consumptionEntities.map { it.meterNo }.toString())
-
-
-         projectDao.upsertConsumptions(consumptionEntities)
+        projectDao.upsertConsumptions(consumptionEntities)
+        projectDao.updateProjectsDownloaded(projectCodes)
 
     }
 }

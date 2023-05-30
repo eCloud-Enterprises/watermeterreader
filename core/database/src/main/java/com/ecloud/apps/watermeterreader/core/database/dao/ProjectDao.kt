@@ -14,14 +14,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProjectDao {
 
-    @Query("SELECT * FROM projects")
+    @Query("SELECT * FROM projects where downloaded = 0")
     fun getProjectsStream(): Flow<List<ProjectEntity>>
 
     /**
      * Gets the list of [ProjectEntity] with the list of [ConsumptionEntity]
      */
     @Transaction
-    @Query("SELECT * FROM projects")
+    @Query("SELECT * FROM projects where downloaded = 1")
     fun getProjectsWithConsumptionsStream(): Flow<List<ProjectWithConsumptionsEntity>>
 
     @Update
@@ -60,6 +60,12 @@ interface ProjectDao {
      */
     @Update
     suspend fun updateProjects(entities: List<ProjectEntity>)
+
+    /**
+     *
+     */
+    @Query("UPDATE projects set downloaded = 1 where code in (:codes) ")
+    suspend fun updateProjectsDownloaded(codes: List<String>)
 
     @Transaction
     suspend fun upsertProjects(entities: List<ProjectEntity>) = upsert(
