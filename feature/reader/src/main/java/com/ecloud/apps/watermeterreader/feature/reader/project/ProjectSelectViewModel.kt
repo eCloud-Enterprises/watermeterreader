@@ -27,8 +27,7 @@ class ProjectSelectViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             projectRepository.fetchProjects()
-            val result = projectStream.first().toMutableList()
-            result.add(0, Project("Select here", ""))
+            val result = projectStream.first()
             _uiState.update { it.copy(projects = result, isLoading = false) }
         }
     }
@@ -43,13 +42,12 @@ class ProjectSelectViewModel @Inject constructor(
 
     private fun deselectProject(event: ProjectSelectEvent.OnDeselectProject) {
         val selectedProjects = _uiState.value.selectedProjects.toMutableList()
-        selectedProjects.removeIf { it.code == event.projectCode }
+        selectedProjects.remove(event.project)
         _uiState.update { it.copy(selectedProjects = selectedProjects) }
     }
 
     private fun selectProject(event: ProjectSelectEvent.OnSelectProject) {
-        val project = _uiState.value.projects.first { it.code == event.projectCode }
-        val selectedProjects = _uiState.value.selectedProjects + project
+        val selectedProjects = _uiState.value.selectedProjects + event.project
         _uiState.update { it.copy(selectedProjects = selectedProjects) }
     }
 
@@ -63,9 +61,9 @@ class ProjectSelectViewModel @Inject constructor(
 }
 
 sealed class ProjectSelectEvent {
-    data class OnSelectProject(val projectCode: String) : ProjectSelectEvent()
+    data class OnSelectProject(val project: Project) : ProjectSelectEvent()
     object OnDownload : ProjectSelectEvent()
-    data class OnDeselectProject(val projectCode: String) : ProjectSelectEvent()
+    data class OnDeselectProject(val project: Project) : ProjectSelectEvent()
 }
 
 data class ProjectSelectUiState(
