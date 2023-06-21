@@ -13,7 +13,6 @@ import com.ecloud.apps.watermeterreader.core.result.asResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,13 +33,22 @@ class ReaderViewModel @Inject constructor(
         viewModelScope.launch {
             projectsStream.collect { result ->
                 when (result) {
-                    is Result.Error -> TODO()
+                    is Result.Error -> {
+                        Log.e(
+                            "ReaderViewModel",
+                            result.exception?.message ?: "Something went wrong"
+                        )
+                    }
+
                     Result.Loading -> _uiState.update { it.copy(isLoading = true) }
                     is Result.Success -> {
-                        Log.d("ReaderViewModel", result.data.map { it.code }.toString())
-                        val list = result.data.toMutableList()
-                        list.add(0, ProjectWithConsumptions("Select here", "", emptyList()))
-                        _uiState.update { it.copy(projects = list, isLoading = false) }
+                        _uiState.update {
+                            it.copy(
+                                projectsWithConsumptions = result.data,
+                                isLoading = false,
+                                shouldDownloadProjects = result.data.isEmpty()
+                            )
+                        }
                     }
                 }
             }
@@ -53,11 +61,18 @@ class ReaderViewModel @Inject constructor(
             is ReaderEvent.OnScan -> scan(event)
             is ReaderEvent.OnSave -> save(event)
             is ReaderEvent.OnSelectProject -> selectProject(event)
+            is ReaderEvent.OnSelectConsumption -> selectConsumption(event)
+            ReaderEvent.OnScanErrorShown -> _uiState.update { it.copy(scanError = "") }
         }
     }
 
+    private fun selectConsumption(event: ReaderEvent.OnSelectConsumption) {
+        _uiState.update { it.copy(selectedConsumption = event.consumption) }
+    }
+
     private fun selectProject(event: ReaderEvent.OnSelectProject) {
-        val project = _uiState.value.projects.first { it.code == event.projectCode }
+        val project =
+            _uiState.value.projectsWithConsumptions.first { it.project.code == event.project.code }
         _uiState.update { it.copy(selectedProject = project) }
     }
 
@@ -83,8 +98,13 @@ class ReaderViewModel @Inject constructor(
 
         val consumption =
             project
-                .consumptions.first { consumption -> consumption.meterNo == event.meterNo }
-        _uiState.update { it.copy(selectedConsumption = consumption) }
+                .consumptions.firstOrNull { consumption -> consumption.meterNo == event.meterNo }
+
+        if (consumption == null) {
+            _uiState.update { it.copy(scanError = "Meter No is not found") }
+        } else {
+            _uiState.update { it.copy(selectedConsumption = consumption) }
+        }
     }
 }
 
@@ -96,12 +116,16 @@ sealed class ReaderEvent {
         val remarks: String
     ) : ReaderEvent()
 
-    data class OnSelectProject(val projectCode: String) : ReaderEvent()
+    data class OnSelectProject(val project: Project) : ReaderEvent()
+    data class OnSelectConsumption(val consumption: Consumption) : ReaderEvent()
+    object OnScanErrorShown : ReaderEvent()
 }
 
 data class ReaderUiState(
-    val projects: List<ProjectWithConsumptions> = emptyList(),
+    val projectsWithConsumptions: List<ProjectWithConsumptions> = emptyList(),
     val selectedProject: ProjectWithConsumptions? = null,
     val selectedConsumption: Consumption? = null,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val scanError: String = "",
+    val shouldDownloadProjects: Boolean =false
 )

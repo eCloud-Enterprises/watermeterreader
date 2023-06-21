@@ -12,5 +12,4 @@
     <string name="text_projects">Projects</string>
     <string name="select_a_project">Select a project to download, You can add more later</string>
     <string name="submit_form">Update</string>
-    <string name="text_download">Download</string>
 </resources>

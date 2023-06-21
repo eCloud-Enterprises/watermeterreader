@@ -11,7 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -44,7 +50,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ecloud.apps.watermeterreader.core.designsystem.icon.EbtIcons
 import com.ecloud.apps.watermeterreader.core.designsystem.theme.WmrTheme
-import com.ecloud.apps.watermeterreader.feature.reader.ProjectList
+import com.ecloud.apps.watermeterreader.core.model.data.Project
+import com.ecloud.apps.watermeterreader.core.model.data.getDisplayName
+import com.ecloud.apps.watermeterreader.core.ui.ProjectList
+import com.ecloud.apps.watermeterreader.core.ui.TextFieldState
 import com.ecloud.apps.watermeterreader.feature.reader.R
 import com.ecloud.apps.watermeterreader.feature.reader.destinations.ProjectSelectScreenDestination
 import com.ecloud.apps.watermeterreader.feature.reader.reader.states.AdjustmentState
@@ -101,49 +110,59 @@ internal fun ReaderScreen(
     onEvent: (ReaderEvent) -> Unit = {},
     showSelectionPage: () -> Unit = {}
 ) {
-    if (!uiState.isLoading && uiState.projects.size == 1) {
+    if (!uiState.isLoading && uiState.shouldDownloadProjects) {
         LaunchedEffect(key1 = Unit, block = { showSelectionPage() })
     }
+
+    if (uiState.scanError.isNotEmpty()) {
+        var open by remember { mutableStateOf(false) }
+        if (open) {
+            AlertDialog(
+                onDismissRequest = { open = false },
+                title = { Text("Scan Error") },
+                text = {
+                    Text(
+                        text = uiState.scanError
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = { open = false }) {
+                        Text(text = "Understood")
+                    }
+                },
+                icon = {
+                    Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
+                }
+            )
+        }
+    }
+
     val scope = rememberCoroutineScope()
     Surface(modifier = modifier) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(8.dp)
         ) {
-            Text(
-                text = "Offline",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.inverseSurface)
-                    .padding(8.dp),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    textAlign = TextAlign.Center
-                )
+            val adjustmentFr = remember { FocusRequester() }
+            val remarksFr = remember { FocusRequester() }
+            val meterNoFr = remember { FocusRequester() }
+            val readingFr = remember { FocusRequester() }
+
+            val projectState =
+                remember { TextFieldState() }
+            ProjectList(
+                list = uiState.projectsWithConsumptions.map { it.project },
+                state = projectState,
+                onChangeSelectedOptionText = { project, _ ->
+                    onEvent(ReaderEvent.OnSelectProject(project))
+                    projectState.text = project.getDisplayName()
+                }
             )
-            ReaderToolbar()
 
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-            ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-                val adjustmentFr = remember { FocusRequester() }
-                val remarksFr = remember { FocusRequester() }
-                val meterNoFr = remember { FocusRequester() }
-                val readingFr = remember { FocusRequester() }
-
-                ProjectList(
-                    list = uiState.projects.map { it.code },
-                    selectedOptionText = uiState.selectedProject?.name ?: "",
-                    onChangeSelectedOptionText = { code, _ ->
-                        onEvent(ReaderEvent.OnSelectProject(code))
-                        meterNoFr.requestFocus()
-                    }
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
+            uiState.selectedProject?.let { project ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -153,13 +172,20 @@ internal fun ReaderScreen(
                             MeterNoState()
                         )
                     }
+
                     MeterNo(
+                        list = project.consumptions,
                         state = meterNoState,
                         onImeAction = { readingFr.requestFocus() },
                         imeAction = ImeAction.Next,
                         modifier = Modifier
                             .focusRequester(meterNoFr)
-                            .weight(1f)
+                            .weight(1f),
+                        onChangeSelectedOptionText = { consumption, _ ->
+                            onEvent(ReaderEvent.OnSelectConsumption(consumption))
+                            meterNoState.text = consumption.getDisplayName()
+                            readingFr.requestFocus()
+                        }
                     )
 
 
@@ -167,8 +193,11 @@ internal fun ReaderScreen(
                         scope.launch {
                             try {
                                 val barcode = scanner.open()
-                                barcode?.let { Log.d("QRCode Scan", barcode) }
-                                readingFr.requestFocus()
+                                barcode?.let {
+                                    onEvent(ReaderEvent.OnScan(barcode))
+                                    readingFr.requestFocus()
+                                    Log.d("QRCode Scan", barcode)
+                                }
                             } catch (e: Exception) {
                                 snackbarHostState.showSnackbar(message = "Scan Failed, something went wrong")
                                 Log.e("QRCode Error", e.message ?: "Something went wrong")
@@ -176,13 +205,13 @@ internal fun ReaderScreen(
                         }
                     })
                 }
-
                 Spacer(modifier = Modifier.height(16.dp))
 
                 val readingState = remember { ReadingsState() }
+
                 CurrentReading(
                     state = readingState,
-                    onImeAction = {},
+                    onImeAction = { adjustmentFr.requestFocus() },
                     imeAction = ImeAction.Next,
                     modifier = Modifier.focusRequester(readingFr)
                 )
@@ -225,7 +254,6 @@ internal fun ReaderScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-
                 Button(onClick = {
 
                     onEvent(
@@ -238,7 +266,6 @@ internal fun ReaderScreen(
                 }) {
                     Text(text = "Update")
                 }
-
             }
         }
     }
@@ -248,16 +275,11 @@ internal fun ReaderScreen(
 internal fun ScanButton(
     onClick: () -> Unit
 ) {
-    IconButton(
+    TextButton(
         onClick = onClick,
-        colors = IconButtonDefaults.filledIconButtonColors(
-            containerColor = MaterialTheme.colorScheme.inversePrimary
-        )
+        colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.inversePrimary)
     ) {
-        Icon(
-            painter = painterResource(id = EbtIcons.QrCodeScanner),
-            contentDescription = "Scanner"
-        )
+        Text(text = "Scan QR Code")
     }
 }
 

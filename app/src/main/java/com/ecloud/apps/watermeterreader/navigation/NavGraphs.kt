@@ -4,6 +4,7 @@ import com.ecloud.apps.watermeterreader.feature.auth.destinations.LoginScreenDes
 import com.ecloud.apps.watermeterreader.feature.onboarding.destinations.NetworkScreenDestination
 import com.ecloud.apps.watermeterreader.feature.onboarding.destinations.WelcomeScreenDestination
 import com.ecloud.apps.watermeterreader.feature.projects.destinations.ProjectsScreenDestination
+import com.ecloud.apps.watermeterreader.feature.reader.destinations.ProjectSelectScreenDestination
 import com.ecloud.apps.watermeterreader.feature.reader.destinations.ReaderScreenDestination
 import com.ecloud.apps.watermeterreader.feature.settings.destinations.SettingsScreenDestination
 import com.ecloud.apps.watermeterreader.feature.upload.destinations.UploadScreenDestination
@@ -43,7 +44,8 @@ object NavGraphs {
                 ReaderScreenDestination,
                 UploadScreenDestination,
                 SettingsScreenDestination,
-                ProjectsScreenDestination
+                ProjectsScreenDestination,
+                ProjectSelectScreenDestination
             ).associateBy { it.route }
         override val route: String
             get() = "reader"

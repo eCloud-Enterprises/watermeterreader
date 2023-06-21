@@ -1,7 +1,9 @@
 package com.ecloud.apps.watermeterreader.core.ui
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
 
@@ -52,3 +54,7 @@ fun textFieldStateSaver(state: TextFieldState) = listSaver<TextFieldState, Any>(
         }
     }
 )
+
+@Composable
+fun rememberTextFieldState(initialText: String = "") =
+    remember { TextFieldState(initialText = initialText) }
