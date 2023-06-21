@@ -13,16 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EbtTopAppBar(
     @StringRes titleRes: Int,
-    navigationIcon: ImageVector,
     modifier: Modifier = Modifier,
     actionIcon: ImageVector? = null,
+    navigationIcon: ImageVector? = null,
     navigationIconContentDescription: String? = null,
     actionIconContentDescription: String? = null,
-    colors: TopAppBarColors = TopAppBarDefaults.smallTopAppBarColors(),
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
     onNavigationClick: () -> Unit = {},
     onActionClick: () -> Unit = {}
 ) {
@@ -30,11 +31,13 @@ fun EbtTopAppBar(
         title = { Text(text = stringResource(id = titleRes)) },
         modifier = modifier,
         navigationIcon = {
-            IconButton(onClick = onNavigationClick) {
-                Icon(
-                    imageVector = navigationIcon,
-                    contentDescription = navigationIconContentDescription,
-                )
+            navigationIcon?.let {
+                IconButton(onClick = onNavigationClick) {
+                    Icon(
+                        imageVector = navigationIcon,
+                        contentDescription = navigationIconContentDescription,
+                    )
+                }
             }
         },
         actions = {

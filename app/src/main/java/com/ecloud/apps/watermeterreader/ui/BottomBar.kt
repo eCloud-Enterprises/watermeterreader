@@ -1,7 +1,7 @@
 package com.ecloud.apps.watermeterreader.ui
 
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,19 +11,19 @@ import androidx.compose.ui.res.stringResource
 import com.ecloud.apps.watermeterreader.bottombar.BottomBarDestination
 import com.ecloud.apps.watermeterreader.core.designsystem.icon.Icon
 import com.ramcosta.composedestinations.spec.DestinationSpec
-import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
 @Composable
 fun BottomBar(
-    selectedNavigation: DestinationSpec<*>?,
-    onNavigationSelected: (DirectionDestinationSpec) -> Unit,
+    destinations: List<BottomBarDestination>,
+    onNavigateToDestination: (BottomBarDestination) -> Unit,
+    currentDestination: DestinationSpec<*>?,
     modifier: Modifier = Modifier
 ) {
     NavigationBar(modifier = modifier) {
-        BottomBarDestination.values().forEach { destination ->
+        destinations.forEach { destination ->
             NavigationBarItem(
-                selected = selectedNavigation == destination.direction,
-                onClick = { onNavigationSelected(destination.direction) },
+                selected = currentDestination == destination.direction,
+                onClick = { onNavigateToDestination(destination) },
                 icon = {
                     when (destination.icon) {
                         is Icon.DrawableResourceIcon -> {
