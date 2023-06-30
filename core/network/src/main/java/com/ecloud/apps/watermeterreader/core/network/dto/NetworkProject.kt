@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkProject(
-    @SerialName("projectcode")
-    val projectcode: String,
-    @SerialName("projectname")
-    val projectname: String
+    @SerialName("docno")
+    val projectCode: String,
+    @SerialName("project")
+    val projectName: String
 )

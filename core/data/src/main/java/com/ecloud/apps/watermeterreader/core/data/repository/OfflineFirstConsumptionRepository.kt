@@ -1,16 +1,13 @@
 package com.ecloud.apps.watermeterreader.core.data.repository
 
-import android.util.Log
 import com.ecloud.apps.watermeterreader.core.data.Synchronizer
 import com.ecloud.apps.watermeterreader.core.data.models.asEntity
 import com.ecloud.apps.watermeterreader.core.database.dao.ProjectDao
-import com.ecloud.apps.watermeterreader.core.database.model.ConsumptionEntity
-import com.ecloud.apps.watermeterreader.core.model.data.Consumption
+import com.ecloud.apps.watermeterreader.core.model.data.WaterReadingItem
 import com.ecloud.apps.watermeterreader.core.network.WmrNetworkDataSource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -26,8 +23,8 @@ class OfflineFirstConsumptionRepository @Inject constructor(
         return true
     }
 
-    override fun updateConsumption(consumption: Consumption) {
-        projectDao.updateConsumption(consumption.asEntity())
+    override fun updateConsumption(waterReadingItem: WaterReadingItem) {
+        projectDao.updateConsumption(waterReadingItem.asEntity())
     }
 
     override suspend fun fetchConsumptions(projectCodes: List<String>) {

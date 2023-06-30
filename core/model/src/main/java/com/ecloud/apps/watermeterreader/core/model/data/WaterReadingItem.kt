@@ -1,14 +1,15 @@
 package com.ecloud.apps.watermeterreader.core.model.data
 
-data class Consumption(
+data class WaterReadingItem(
     val meterNo: String,
-    val previousReading: Int,
+    val previousReading: Float,
     val currentReading: Float,
     val adjustments: Float,
     val remarks: String,
     val consumption: Float,
     val projectCode: String,
     val location: String,
+    val contract: String,
 )
 
-fun Consumption.getDisplayName(): String = "$meterNo - $location"
+fun WaterReadingItem.getDisplayName(): String = "$meterNo - $location"

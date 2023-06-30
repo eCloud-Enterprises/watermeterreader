@@ -10,7 +10,6 @@ import com.ecloud.apps.watermeterreader.core.network.dto.NetworkConsumption
 import com.ecloud.apps.watermeterreader.core.network.dto.NetworkProject
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -32,14 +31,14 @@ class FakeWmrNetworkDataSource @Inject constructor(
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    override suspend fun getProjects(objectCode: String, type: String): List<NetworkProject> =
+    override suspend fun getProjects(): List<NetworkProject> =
         withContext(ioDispatcher) {
             assets.open(WAREHOUSES_ASSET).use(networkJson::decodeFromStream)
         }
 
     override suspend fun getConsumptions(projectCode: String): List<NetworkConsumption> =
         withContext(ioDispatcher){
-            assets.open("consumption-$projectCode.json").use(networkJson::decodeFromStream)
+            assets.open("$projectCode.json").use(networkJson::decodeFromStream)
         }
 
     override suspend fun login(userid: String, password: String): LoginDto =
@@ -47,12 +46,11 @@ class FakeWmrNetworkDataSource @Inject constructor(
             assets.open(LOGIN_ASSET).use(networkJson::decodeFromStream)
         }
 
-    override suspend fun getBranches(objectCode: String, type: String): List<NetworkBranch> =
+    override suspend fun getBranches(): List<NetworkBranch> =
         withContext(ioDispatcher) {
             assets.open(BRANCHES_ASSET).use(networkJson::decodeFromStream)
         }
 
     override suspend fun checkProjects(): Boolean = withContext(ioDispatcher) { true }
 
-    override suspend fun checkStockAudits(): Boolean = withContext(ioDispatcher) { true }
 }

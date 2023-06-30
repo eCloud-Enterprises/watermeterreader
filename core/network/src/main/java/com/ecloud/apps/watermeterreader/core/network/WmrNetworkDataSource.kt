@@ -10,10 +10,7 @@ import com.ecloud.apps.watermeterreader.core.network.dto.NetworkProject
  */
 interface WmrNetworkDataSource {
 
-    suspend fun getProjects(
-        objectCode: String = "u_ajaxMobileGetStockAudit",
-        type: String = "Projects"
-    ): List<NetworkProject>
+    suspend fun getProjects(): List<NetworkProject>
 
     suspend fun getConsumptions(
         projectCode: String
@@ -23,10 +20,5 @@ interface WmrNetworkDataSource {
 
     suspend fun checkProjects(): Boolean
 
-    suspend fun checkStockAudits(): Boolean
-
-    suspend fun getBranches(
-        objectCode: String = "u_ajaxMobileGetStockAudit",
-        type: String = "Branches"
-    ): List<NetworkBranch>
+    suspend fun getBranches(): List<NetworkBranch>
 }

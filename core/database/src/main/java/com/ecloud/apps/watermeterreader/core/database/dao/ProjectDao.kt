@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.ecloud.apps.watermeterreader.core.database.model.ConsumptionEntity
+import com.ecloud.apps.watermeterreader.core.database.model.WaterReadingItemEntity
 import com.ecloud.apps.watermeterreader.core.database.model.ProjectEntity
 import com.ecloud.apps.watermeterreader.core.database.model.ProjectWithConsumptionsEntity
 import kotlinx.coroutines.flow.Flow
@@ -18,29 +18,29 @@ interface ProjectDao {
     fun getProjectsStream(): Flow<List<ProjectEntity>>
 
     /**
-     * Gets the list of [ProjectEntity] with the list of [ConsumptionEntity]
+     * Gets the list of [ProjectEntity] with the list of [WaterReadingItemEntity]
      */
     @Transaction
     @Query("SELECT * FROM projects where downloaded = 1")
     fun getProjectsWithConsumptionsStream(): Flow<List<ProjectWithConsumptionsEntity>>
 
     @Update
-    fun updateConsumption(consumptionEntity: ConsumptionEntity)
+    fun updateConsumption(waterReadingItemEntity: WaterReadingItemEntity)
 
     /**
      * Inserts [consumptionEntities] into the db if they don't exist, and ignores those that do
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertOrIgnoreConsumptions(consumptionEntities: List<ConsumptionEntity>): List<Long>
+    suspend fun insertOrIgnoreConsumptions(consumptionEntities: List<WaterReadingItemEntity>): List<Long>
 
     /**
      * Updates [entities] in the db that match the primary key, and no-ops if they dont'
      */
     @Update
-    suspend fun updateConsumptions(entities: List<ConsumptionEntity>)
+    suspend fun updateConsumptions(entities: List<WaterReadingItemEntity>)
 
     @Transaction
-    suspend fun upsertConsumptions(entities: List<ConsumptionEntity>) = upsert(
+    suspend fun upsertConsumptions(entities: List<WaterReadingItemEntity>) = upsert(
         items = entities,
         insertMany = ::insertOrIgnoreConsumptions,
         updateMany = ::updateConsumptions,
@@ -50,10 +50,10 @@ interface ProjectDao {
     suspend fun deleteAllProjects()
 
     /**
-     * Inserts [warehouseEntities] into the db if they don't exist, and ignores those that do
+     * Inserts [entities] into the db if they don't exist, and ignores those that do
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertOrIgnoreProjects(warehouseEntities: List<ProjectEntity>): List<Long>
+    suspend fun insertOrIgnoreProjects(entities: List<ProjectEntity>): List<Long>
 
     /**
      * Updates [entities] in the db that match the primary key, and no-ops if they dont'

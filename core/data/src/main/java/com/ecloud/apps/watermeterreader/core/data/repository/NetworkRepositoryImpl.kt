@@ -24,9 +24,6 @@ class NetworkRepositoryImpl @Inject constructor(
             async {
                 wmrNetworkDataSource.checkProjects()
             },
-            async {
-                wmrNetworkDataSource.checkStockAudits()
-            }
         ).all { it }
 
         isOk

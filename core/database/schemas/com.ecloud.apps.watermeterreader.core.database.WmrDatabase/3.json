@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "4ab0d0e74e3eb8dc77f5427e93411f8c",
+    "version": 3,
+    "identityHash": "a90fd71e189248f153057a2d008548bf",
     "entities": [
       {
         "tableName": "projects",
@@ -63,15 +63,9 @@
         "foreignKeys": []
       },
       {
-        "tableName": "water_reading_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contract` TEXT NOT NULL, `meter_no` TEXT NOT NULL, `current_reading` REAL NOT NULL, `previous_reading` REAL NOT NULL, `adjustments` REAL NOT NULL, `remarks` TEXT NOT NULL, `consumption` REAL NOT NULL, `stockcode` TEXT NOT NULL, `projectCode` TEXT NOT NULL, PRIMARY KEY(`contract`, `meter_no`), FOREIGN KEY(`projectCode`) REFERENCES `projects`(`code`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "consumptions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`meter_no` TEXT NOT NULL, `current_reading` REAL NOT NULL, `previous_reading` INTEGER NOT NULL, `adjustments` REAL NOT NULL, `remarks` TEXT NOT NULL, `consumption` REAL NOT NULL, `location` TEXT NOT NULL, `projectCode` TEXT NOT NULL, PRIMARY KEY(`meter_no`), FOREIGN KEY(`projectCode`) REFERENCES `projects`(`code`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
-          {
-            "fieldPath": "contract",
-            "columnName": "contract",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "meterNo",
             "columnName": "meter_no",
@@ -87,7 +81,7 @@
           {
             "fieldPath": "previousReading",
             "columnName": "previous_reading",
-            "affinity": "REAL",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -110,7 +104,7 @@
           },
           {
             "fieldPath": "location",
-            "columnName": "stockcode",
+            "columnName": "location",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -123,20 +117,19 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "contract",
             "meter_no"
           ],
           "autoGenerate": false
         },
         "indices": [
           {
-            "name": "index_water_reading_item_projectCode",
+            "name": "index_consumptions_projectCode",
             "unique": false,
             "columnNames": [
               "projectCode"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_water_reading_item_projectCode` ON `${TABLE_NAME}` (`projectCode`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consumptions_projectCode` ON `${TABLE_NAME}` (`projectCode`)"
           }
         ],
         "foreignKeys": [
@@ -157,7 +150,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ab0d0e74e3eb8dc77f5427e93411f8c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a90fd71e189248f153057a2d008548bf')"
     ]
   }
 }

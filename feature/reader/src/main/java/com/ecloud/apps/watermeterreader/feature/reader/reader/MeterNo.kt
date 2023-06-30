@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import com.ecloud.apps.watermeterreader.core.model.data.Consumption
+import com.ecloud.apps.watermeterreader.core.model.data.WaterReadingItem
 import com.ecloud.apps.watermeterreader.core.model.data.getDisplayName
 import com.ecloud.apps.watermeterreader.core.ui.TextFieldState
 import com.ecloud.apps.watermeterreader.feature.reader.R
@@ -26,8 +26,8 @@ import com.ecloud.apps.watermeterreader.feature.reader.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MeterNo(
-    list: List<Consumption>,
-    onChangeSelectedOptionText: (Consumption, Int) -> Unit,
+    list: List<WaterReadingItem>,
+    onChangeSelectedOptionText: (WaterReadingItem, Int) -> Unit,
     modifier: Modifier = Modifier,
     state: TextFieldState = remember { TextFieldState() },
     imeAction: ImeAction = ImeAction.Done,

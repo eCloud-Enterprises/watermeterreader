@@ -5,18 +5,20 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkConsumption(
-   @SerialName("meterno")
-   val  meterNo: String,
-   @SerialName("prevreading")
-   val  previousReading: Int,
-   @SerialName("currentreading")
-   val currentReading: Float,
-   @SerialName("adjustments")
-   val adjustments: Float,
-   @SerialName("remarks")
-   val remarks: String,
-   @SerialName("consumption")
-   val consumption: Float,
-   @SerialName("location")
-   val location: String,
+    @SerialName("contract")
+    val contract: String,
+    @SerialName("stockcode")
+    val stockcode: String,
+    @SerialName("meterno")
+    val meterNo: String,
+    @SerialName("previousreading")
+    val previousReading: String,
+    @SerialName("currentreading")
+    val currentReading: String,
+    @SerialName("adjustment")
+    val adjustments: String,
+    @SerialName("adjustmentremarks")
+    val remarks: String,
+    @SerialName("consumption")
+    val consumption: String,
 )

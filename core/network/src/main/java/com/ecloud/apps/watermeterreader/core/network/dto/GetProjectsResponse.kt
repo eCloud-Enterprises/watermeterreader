@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetProjectsResponse(
-    @SerialName("projects")
-    val warehouses: List<NetworkProject>
+    @SerialName("waterreading")
+    val projects: List<NetworkProject>
 )

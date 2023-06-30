@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ecloud.apps.watermeterreader.core.data.repository.ConsumptionRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.ProjectRepository
-import com.ecloud.apps.watermeterreader.core.model.data.Consumption
+import com.ecloud.apps.watermeterreader.core.model.data.WaterReadingItem
 import com.ecloud.apps.watermeterreader.core.model.data.Project
 import com.ecloud.apps.watermeterreader.core.model.data.ProjectWithConsumptions
 import com.ecloud.apps.watermeterreader.core.result.Result
@@ -67,7 +67,7 @@ class ReaderViewModel @Inject constructor(
     }
 
     private fun selectConsumption(event: ReaderEvent.OnSelectConsumption) {
-        _uiState.update { it.copy(selectedConsumption = event.consumption) }
+        _uiState.update { it.copy(selectedWaterReadingItem = event.waterReadingItem) }
     }
 
     private fun selectProject(event: ReaderEvent.OnSelectProject) {
@@ -79,8 +79,8 @@ class ReaderViewModel @Inject constructor(
     private fun save(event: ReaderEvent.OnSave) {
 
         _uiState.value.run {
-            checkNotNull(selectedConsumption) { "Consumption must be set beforehand" }
-            val consumption = selectedConsumption.copy(
+            checkNotNull(selectedWaterReadingItem) { "Consumption must be set beforehand" }
+            val consumption = selectedWaterReadingItem.copy(
                 currentReading = event.currentReading.toFloat(),
                 adjustments = event.adjustments.toFloat(),
                 remarks = event.remarks
@@ -98,12 +98,12 @@ class ReaderViewModel @Inject constructor(
 
         val consumption =
             project
-                .consumptions.firstOrNull { consumption -> consumption.meterNo == event.meterNo }
+                .waterReadingItems.firstOrNull { consumption -> consumption.meterNo == event.meterNo }
 
         if (consumption == null) {
             _uiState.update { it.copy(scanError = "Meter No is not found") }
         } else {
-            _uiState.update { it.copy(selectedConsumption = consumption) }
+            _uiState.update { it.copy(selectedWaterReadingItem = consumption) }
         }
     }
 }
@@ -117,14 +117,14 @@ sealed class ReaderEvent {
     ) : ReaderEvent()
 
     data class OnSelectProject(val project: Project) : ReaderEvent()
-    data class OnSelectConsumption(val consumption: Consumption) : ReaderEvent()
+    data class OnSelectConsumption(val waterReadingItem: WaterReadingItem) : ReaderEvent()
     object OnScanErrorShown : ReaderEvent()
 }
 
 data class ReaderUiState(
     val projectsWithConsumptions: List<ProjectWithConsumptions> = emptyList(),
     val selectedProject: ProjectWithConsumptions? = null,
-    val selectedConsumption: Consumption? = null,
+    val selectedWaterReadingItem: WaterReadingItem? = null,
     val isLoading: Boolean = true,
     val scanError: String = "",
     val shouldDownloadProjects: Boolean =false

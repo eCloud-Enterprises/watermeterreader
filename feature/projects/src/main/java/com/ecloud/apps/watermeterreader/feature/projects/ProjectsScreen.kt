@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ecloud.apps.watermeterreader.core.designsystem.components.EbtLoader
 import com.ecloud.apps.watermeterreader.core.designsystem.theme.WmrTheme
-import com.ecloud.apps.watermeterreader.core.model.data.Consumption
+import com.ecloud.apps.watermeterreader.core.model.data.WaterReadingItem
 import com.ecloud.apps.watermeterreader.core.model.data.Project
 import com.ecloud.apps.watermeterreader.core.model.data.ProjectWithConsumptions
 import com.ecloud.apps.watermeterreader.core.model.data.getDisplayName
@@ -44,16 +44,17 @@ import com.ramcosta.composedestinations.annotation.Destination
 val mockProjectWithConsumptions = List(10) {
     ProjectWithConsumptions(
         project = Project(it.toString().padStart(4, '0'), name = "Project ${it + 1}"),
-        consumptions = List(3) { num ->
-            Consumption(
+        waterReadingItems = List(3) { num ->
+            WaterReadingItem(
                 meterNo = num.toString().padStart(4, '0'),
                 currentReading = 0.0f,
                 consumption = 0f,
-                previousReading = 0,
+                previousReading = 0f,
                 remarks = "",
                 adjustments = 0f,
                 projectCode = "",
-                location = "Makati-BL${num + 10}-L${num + 9}"
+                location = "Makati-BL${num + 10}-L${num + 9}",
+                contract = ""
             )
         }
     )
@@ -162,7 +163,7 @@ private fun ProjectItem(
         AnimatedVisibility(visible = expanded) {
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                item.consumptions.forEach { consumption ->
+                item.waterReadingItems.forEach { consumption ->
                     Text(text = consumption.getDisplayName())
                 }
             }
