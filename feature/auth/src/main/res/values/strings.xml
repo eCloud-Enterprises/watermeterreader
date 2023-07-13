@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in">Sign In</string>
+    <string name="label_password">Password</string>
+    <string name="network_settings">Network Settings</string>
+    <string name="add_url">Add URL</string>
+    <string name="navigate_back">Navigate Back</string>
+    <string name="edit_url">Edit URL</string>
+    <string name="delete_url">Delete URL</string>
+    <string name="submit_form">Submit</string>
+    <string name="label_name">URL Name</string>
+</resources>

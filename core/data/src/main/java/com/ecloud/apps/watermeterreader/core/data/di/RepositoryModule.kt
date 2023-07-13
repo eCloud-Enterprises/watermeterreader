@@ -2,10 +2,12 @@ package com.ecloud.apps.watermeterreader.core.data.di
 
 import com.ecloud.apps.watermeterreader.core.data.repository.AuthRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.BranchRepository
+import com.ecloud.apps.watermeterreader.core.data.repository.ConsumptionRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.NetworkRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.NetworkRepositoryImpl
 import com.ecloud.apps.watermeterreader.core.data.repository.OfflineFirstAuthRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.OfflineFirstBranchRepository
+import com.ecloud.apps.watermeterreader.core.data.repository.OfflineFirstConsumptionRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.OfflineFirstUserDataRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.OfflineFirstProjectRepository
 import com.ecloud.apps.watermeterreader.core.data.repository.UserDataRepository
@@ -37,5 +39,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindsBranchRepository(branchRepository: OfflineFirstBranchRepository): BranchRepository
+
+    @Binds
+    fun bindsConsumptionRepository(consumptionRepository: OfflineFirstConsumptionRepository): ConsumptionRepository
 
 }

@@ -3,11 +3,13 @@ package com.ecloud.apps.watermeterreader.core.network.retrofit
 import com.ecloud.apps.watermeterreader.core.datastore.WmrPreferencesDataSource
 import com.ecloud.apps.watermeterreader.core.network.WmrNetworkDataSource
 import com.ecloud.apps.watermeterreader.core.network.dto.GetBranchesResponse
+import com.ecloud.apps.watermeterreader.core.network.dto.GetConsumptionsResponse
 import com.ecloud.apps.watermeterreader.core.network.dto.GetProjectsResponse
 import com.ecloud.apps.watermeterreader.core.network.dto.LoginDto
-import com.ecloud.apps.watermeterreader.core.network.dto.LoginResponseDto
+import com.ecloud.apps.watermeterreader.core.network.dto.LoginResponse
 import com.ecloud.apps.watermeterreader.core.network.dto.NetworkBranch
-import com.ecloud.apps.watermeterreader.core.network.dto.WarehouseDto
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkConsumption
+import com.ecloud.apps.watermeterreader.core.network.dto.NetworkProject
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,32 +38,32 @@ private interface RetrofitEbtNetworkApi {
     suspend fun login(
         @Query("userid") userid: String,
         @Query("password") password: String
-    ): LoginResponseDto
+    ): LoginResponse
 
     @GET("udp.php")
     suspend fun getProjects(
-        @Query("objectcode") objectCode: String = "u_ajaxMobileGetStockAudit",
-        @Query("type") type: String = "Warehouses"
+        @Query("objectcode") objectCode: String = "u_ajaxMobileGetWaterReading",
+        @Query("type") type: String = "WaterReadings"
     ): GetProjectsResponse
+
+    @GET("udp.php")
+    suspend fun getConsumptions(
+        @Query("docno") docno: String,
+        @Query("objectcode") objectCode: String = "u_ajaxMobileGetWaterReading",
+        @Query("type") type: String = "WaterReadingItems",
+    ): GetConsumptionsResponse
 
     @Headers("No-Authentication: true")
     @HEAD("udp.php")
     suspend fun checkProjects(
-        @Query("objectcode") objectCode: String = "u_ajaxMobileGetStockAudit",
-        @Query("type") type: String = "Warehouses"
-    ): Response<Void>
-
-    @Headers("No-Authentication: true")
-    @HEAD("udp.php")
-    suspend fun checkStockAudits(
-        @Query("objectcode") objectCode: String = "u_ajaxMobileGetStockAudit",
-        @Query("type") type: String = "StockAudits"
+        @Query("objectcode") objectCode: String = "u_ajaxMobileGetWaterReading",
+        @Query("type") type: String = "WaterReadings"
     ): Response<Void>
 
     @GET("udp.php")
     suspend fun getBranches(
-        @Query("objectcode") objectCode: String,
-        @Query("type") type: String,
+        @Query("objectcode") objectCode: String = "u_ajaxMobileGetWaterReading",
+        @Query("type") type: String = "Branches",
     ): GetBranchesResponse
 }
 
@@ -110,7 +112,6 @@ class RetrofitWmrNetwork @Inject constructor(
                 .addQueryParameter("branch", user.branchCode)
                 .addQueryParameter("company", user.companyCode)
                 .addQueryParameter("userid", user.id)
-                .addQueryParameter("project", user.projectCode)
                 .build()
 
             request = request.newBuilder()
@@ -150,8 +151,11 @@ class RetrofitWmrNetwork @Inject constructor(
         .build()
         .create(RetrofitEbtNetworkApi::class.java)
 
-    override suspend fun getProjects(objectCode: String, type: String): List<WarehouseDto> =
-        networkApi.getProjects().warehouses
+    override suspend fun getProjects(): List<NetworkProject> =
+        networkApi.getProjects().projects
+
+    override suspend fun getConsumptions(projectCode: String): List<NetworkConsumption> =
+        networkApi.getConsumptions(projectCode).consumptions
 
     override suspend fun login(userid: String, password: String): LoginDto =
         networkApi.login(userid, password).login.first()
@@ -163,15 +167,8 @@ class RetrofitWmrNetwork @Inject constructor(
         } else false
     }
 
-    override suspend fun checkStockAudits(): Boolean {
-        val response = networkApi.checkStockAudits()
-        return if (response.isSuccessful) {
-            isContentTypeJson(response)
-        } else false
-    }
-
-    override suspend fun getBranches(objectCode: String, type: String): List<NetworkBranch> =
-        networkApi.getBranches(objectCode, type).branches
+    override suspend fun getBranches(): List<NetworkBranch> =
+        networkApi.getBranches().branches
 
     private fun isContentTypeJson(response: Response<*>) =
         response.headers()["Content-Type"] == "application/json"

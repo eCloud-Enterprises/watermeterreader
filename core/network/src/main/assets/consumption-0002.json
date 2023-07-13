@@ -1,0 +1,29 @@
+[
+  {
+    "meterno": "223456",
+    "prevreading": 12,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00,
+    "location": "Makati-BL13-L15"
+  },
+  {
+    "meterno": "223457",
+    "prevreading": 11,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00,
+    "location": "Quezon-BL13-L15"
+  },
+  {
+    "meterno": "223457",
+    "prevreading": 8,
+    "currentreading":  0.00,
+    "adjustments": 0.00,
+    "remarks": "",
+    "consumption": 0.00,
+    "location": "Makati-BL14-L15"
+  }
+]

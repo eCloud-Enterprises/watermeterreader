@@ -1,6 +1,7 @@
 package com.ecloud.apps.watermeterreader.core.designsystem.icon
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
@@ -45,13 +47,23 @@ object EbtIcons {
     val VerticalMenu = Icons.Default.MoreVert
     val Edit = Icons.Default.Edit
     val Close = Icons.Default.Close
+    val FilledClose = Icons.Filled.Close
     val Search = Icons.Default.Search
     val Filter = R.drawable.ic_filter_list
     val NetworkWifi = R.drawable.ic_network_wifi
     val Delete = Icons.Default.Delete
+    val Home = Icons.Default.Home
+    val Download = R.drawable.ic_download
 }
 
 sealed class Icon {
-    data class ImageVectorIcon(val imageVectorIcon: ImageVector) : Icon()
-    data class DrawableResourceIcon(@DrawableRes val id: Int) : Icon()
+    data class ImageVectorIcon(
+        val imageVectorIcon: ImageVector,
+        @StringRes val contentDescription: Int? = null
+    ) : Icon()
+
+    data class DrawableResourceIcon(
+        @DrawableRes val id: Int,
+        @StringRes val contentDescription: Int? = null
+    ) : Icon()
 }

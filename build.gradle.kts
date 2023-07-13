@@ -7,4 +7,6 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.gms) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+    id("com.android.library") version "8.0.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
 }

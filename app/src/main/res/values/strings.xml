@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Water Meter Reader</string>
+    <string name="text_home">Reader</string>
+    <string name="text_upload">Upload</string>
+    <string name="text_settings">Settings</string>
+    <string name="text_download">Projects</string>
 </resources>

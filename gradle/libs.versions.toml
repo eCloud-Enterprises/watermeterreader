@@ -1,7 +1,7 @@
 [versions]
 accompanist = "0.28.0"
 androidDesugarJdkLibs = "1.2.0"
-androidGradlePlugin = "8.0.1"
+androidGradlePlugin = "8.0.2"
 androidxActivityCompose = "1.6.1"
 androidxComposeBom = "2023.05.00"
 androidxComposeCompiler = "1.4.7"
@@ -26,6 +26,10 @@ androidxWindow = "1.0.0"
 androidxWork = "2.7.1"
 coil = "2.1.0"
 composeDestinations = "1.9.42-beta"
+playServicesCodeScanner = '16.0.0'
+playServicesBase = '18.2.0'
+playServicesTflite = '16.1.0'
+gridpad = "1.1.0"
 gmsPlugin = "4.3.14"
 firebaseBom = "31.1.1"
 firebaseCrashlyticsGradle = "2.9.2"
@@ -92,6 +96,7 @@ firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx"
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+gridpad = { group = "com.touchlane", name = "gridpad", version.ref = "gridpad" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-compose-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-ext-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltExt" }
@@ -107,6 +112,9 @@ kotlinx-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.r
 mlkit-barcodeScanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit" }
 okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+play-services-code-scanner = { group = "com.google.android.gms", name = "play-services-code-scanner", version.ref = "playServicesCodeScanner" }
+play-services-base = { group = "com.google.android.gms", name = "play-services-base", version.ref = "playServicesBase" }
+play-services-tflite-java = { group = "com.google.android.gms", name = "play-services-tflite-java", version.ref = "playServicesTflite" }
 protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 retrofit-kotlin-serialization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
@@ -119,7 +127,7 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-firebase-crashlytics-gradle= {group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref ="firebaseCrashlyticsGradle"}
+firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 
 
 [plugins]
